@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: corporate-banking-backend
+  data:
+    mongodb:
+          uri: mongodb://localhost:27017/corpbank
+server:
+  port: 8080
+
+
+jwt:
+  secret: corpbank-secret-key-for-jwt-authentication-256-bit-minimum-length
+  expiration: 86400000
