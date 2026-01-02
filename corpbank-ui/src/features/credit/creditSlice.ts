@@ -9,6 +9,22 @@ export const fetchCreditRequests = createAsyncThunk(
   }
 );
 
+export const createCreditRequest = createAsyncThunk(
+  "credit/create",
+  async (data: any) => {
+    const res = await api.post("/api/credit-requests", data);
+    return res.data;
+  }
+);
+
+export const updateCreditRequest = createAsyncThunk(
+  "credit/update",
+  async ({ id, status }: { id: string; status: string }) => {
+    const res = await api.put(`/api/credit-requests/${id}`, { status });
+    return res.data;
+  }
+);
+
 const creditSlice = createSlice({
   name: "credit",
   initialState: {

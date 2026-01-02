@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import api from "../../api/axios";
-import { Container, Typography, Switch, Stack } from "@mui/material";
+import { Container, Typography, Switch, Stack, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function UserList() {
   const [users, setUsers] = useState<any[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     api.get("/api/admin/users").then(res => setUsers(res.data));
@@ -18,9 +20,14 @@ export default function UserList() {
 
   return (
     <Container>
-      <Typography variant="h6" mb={2}>
-        User Management
-      </Typography>
+      <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
+        <Typography variant="h6">
+          User Management
+        </Typography>
+        <Button variant="contained" onClick={() => navigate("/admin/signup")}>
+          Create User
+        </Button>
+      </Stack>
 
       {users.map(user => (
         <Stack

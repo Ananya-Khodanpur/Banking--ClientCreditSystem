@@ -11,13 +11,6 @@ export const login = createAsyncThunk(
   }
 );
 
-export const fetchMe = createAsyncThunk(
-  "auth/me",
-  async () => {
-    const res = await api.get("/api/users/me");
-    return res.data;
-  }
-);
 
 
 interface AuthState {
@@ -47,10 +40,12 @@ extraReducers: (builder) => {
   builder
     .addCase(login.fulfilled, (state, action) => {
       state.token = action.payload.token;
-      state.user = action.payload.user;
-    })
-    .addCase(fetchMe.fulfilled, (state, action) => {
-      state.user = action.payload;
+      // Normalize role by removing ROLE_ prefix
+      const user = action.payload.user;
+      if (user.role && user.role.startsWith('ROLE_')) {
+        user.role = user.role.replace('ROLE_', '');
+      }
+      state.user = user;
     });
 },
 });

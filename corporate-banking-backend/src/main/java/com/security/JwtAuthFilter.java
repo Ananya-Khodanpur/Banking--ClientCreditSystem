@@ -1,6 +1,5 @@
 package com.security;
 
-import com.security.JwtUtil;
 import com.service.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

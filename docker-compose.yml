@@ -1,7 +1,5 @@
-version: "3.9"
-
 services:
-  # MongoDB
+  # MongoDB Database
   mongo:
     image: mongo:6.0
     container_name: mongo
@@ -9,13 +7,12 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin123
-      MONGO_DB: corpbank
     ports:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
 
-  # Backend (Spring Boot)
+  # Backend (Spring Boot API)
   backend:
     build:
       context: ./corporate-banking-backend
@@ -23,28 +20,38 @@ services:
     container_name: backend
     restart: always
     environment:
-      SPRING_DATASOURCE_URL: mongodb://mongo:27017/corpbank
-      SPRING_DATASOURCE_USERNAME: admin
-      SPRING_DATASOURCE_PASSWORD: admin123
+      SPRING_DATA_MONGODB_URI: mongodb://admin:admin123@mongo:27017/corpbank?authSource=admin
       JWT_SECRET: corpbank-secret-key-for-jwt-authentication-256-bit-minimum-length
       JWT_EXPIRATION_MS: 86400000
+    ports:
+      - "8080:8080"
     depends_on:
       - mongo
-    ports:
-      - "8080:8080"   # Expose backend to host machine
 
-  # Frontend (React/Vite + Nginx)
+  # Frontend (React App)
   frontend:
     build:
       context: ./corpbank-ui
       dockerfile: Dockerfile
     container_name: frontend
     restart: always
+    ports:
+      - "80:80"
     depends_on:
       - backend
+
+  # SonarQube (Code Quality Analysis)
+  sonarqube:
+    image: sonarqube:community
+    container_name: sonarqube
+    restart: always
     ports:
-      - "5173:5173"  # Expose Vite dev server port (if using npm run dev)
-      - "80:80"      # Expose Nginx if serving production build
+      - "9000:9000"
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_logs:/opt/sonarqube/logs
 
 volumes:
   mongo-data:
+  sonarqube_data:
+  sonarqube_logs:
