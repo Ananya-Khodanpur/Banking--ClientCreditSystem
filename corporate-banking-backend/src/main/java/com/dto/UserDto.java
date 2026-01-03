@@ -1,8 +1,6 @@
 package com.dto;
 
 import com.enums.Role;
-import lombok.AllArgsConstructor;
-
 
 public class UserDto {
     private String id;

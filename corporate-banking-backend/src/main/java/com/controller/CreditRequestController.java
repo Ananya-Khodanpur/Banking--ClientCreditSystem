@@ -25,6 +25,13 @@ public class CreditRequestController {
         return service.create(dto);
     }
 
+    @PreAuthorize("hasRole('RM')")
+    @GetMapping("/rm")
+    public List<CreditResponseRequest> getMyRequests() {
+        return service.getAll();
+    }
+
+    @PreAuthorize("hasAnyRole('RM', 'ANALYST')")
     @GetMapping
     public List<CreditResponseRequest> list() {
         return service.getAll();

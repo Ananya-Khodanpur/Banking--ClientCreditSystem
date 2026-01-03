@@ -1,6 +1,6 @@
 import DashboardLayout from "../components/DashboardLayout";
 import { Outlet } from "react-router-dom";
-import { Box, Card, CardContent, Typography, Chip } from "@mui/material";
+import { Box, Card, CardContent, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import { useSelector } from "react-redux";
@@ -95,24 +95,6 @@ export default function RMDashboard() {
             </Card>
           </Box>
         </Box>
-
-        {/* Quick Actions */}
-        <Card sx={{ backgroundColor: "#fafafa", border: "1px solid #e0e0e0" }}>
-          <CardContent>
-            <Typography variant="h6" mb={2}>
-              Quick Actions
-            </Typography>
-            <Typography variant="body2" color="text.secondary" mb={2}>
-              Manage your clients and credit requests using the sidebar navigation.
-            </Typography>
-            <Box display="flex" gap={1} flexWrap="wrap">
-              <Chip label="View Clients" size="small" color="primary" />
-              <Chip label="Add New Client" size="small" color="secondary" />
-              <Chip label="Credit Requests" size="small" variant="outlined" />
-              <Chip label="Create Request" size="small" variant="outlined" />
-            </Box>
-          </CardContent>
-        </Card>
       </Box>
 
       <Outlet />

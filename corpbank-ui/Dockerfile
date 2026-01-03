@@ -8,8 +8,18 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install --legacy-peer-deps
 
-# Copy source code
-COPY . .
+# Copy source code (excluding tests for build)
+COPY src/ ./src/
+COPY public/ ./public/
+COPY index.html ./
+COPY package*.json ./
+COPY vite.config.ts ./
+COPY tsconfig.json ./
+COPY tsconfig.app.json ./
+COPY tsconfig.node.json ./
+
+# Fix Rollup issue by clearing cache and reinstalling
+RUN rm -rf node_modules package-lock.json && npm install --legacy-peer-deps
 
 # Build frontend
 RUN npm run build

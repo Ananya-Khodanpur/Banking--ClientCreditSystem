@@ -25,11 +25,9 @@ export default function ClientForm() {
         address: form.address,
         annualTurnover: Number(form.annualTurnover),
         documentsSubmitted: true,
-        primaryContact: {
-          name: form.primaryContactName,
-          email: form.primaryContactEmail,
-          phone: form.primaryContactPhone,
-        },
+        contactName: form.primaryContactName,
+        contactEmail: form.primaryContactEmail,
+        contactPhone: form.primaryContactPhone,
       });
 
       navigate("/rm/clients");

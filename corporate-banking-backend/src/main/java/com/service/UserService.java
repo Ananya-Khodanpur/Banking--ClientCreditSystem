@@ -8,7 +8,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -32,7 +31,7 @@ public class UserService {
     }
 
     public List<UserDto> getAllUsers() {
-        return repo.findAll().stream().map(this::toDto).collect(Collectors.toList());
+        return repo.findAll().stream().map(this::toDto).toList();
     }
 
     public UserDto updateStatus(String userId, boolean active) {

@@ -36,7 +36,7 @@ services:
     container_name: frontend
     restart: always
     ports:
-      - "80:80"
+      - "5173:80"
     depends_on:
       - backend
 
@@ -55,3 +55,4 @@ volumes:
   mongo-data:
   sonarqube_data:
   sonarqube_logs:
+

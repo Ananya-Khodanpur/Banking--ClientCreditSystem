@@ -12,7 +12,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ClientService {
@@ -55,7 +54,7 @@ public class ClientService {
         return repo.findByRmId(rmId)
                 .stream()
                 .map(this::toResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public ClientResponse getClientById(String id) {
@@ -80,6 +79,9 @@ public class ClientService {
         client.setDocumentsSubmitted(req.getDocumentsSubmitted());
 
         PrimaryContact pc = client.getPrimaryContact();
+        if (pc == null) {
+            pc = new PrimaryContact();
+        }
         pc.setName(req.getContactName());
         pc.setEmail(req.getContactEmail());
         pc.setPhone(req.getContactPhone());

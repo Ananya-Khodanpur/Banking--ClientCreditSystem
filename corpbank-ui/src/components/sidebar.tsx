@@ -41,7 +41,9 @@ export default function Sidebar() {
     ],
     RM: [
       { label: "Clients", path: "/rm/clients" },
+      { label: "Add New Client", path: "/rm/clients/new" },
       { label: "My Credit Requests", path: "/rm/credit-requests" },
+      { label: "Create Credit Request", path: "/rm/credit-requests/new" },
     ],
     ANALYST: [
       { label: "Credit Requests", path: "/analyst/credit-requests" },

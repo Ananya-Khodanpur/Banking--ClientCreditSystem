@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 export default function CreditRequestForm() {
   const navigate = useNavigate();
   const [clients, setClients] = useState<any[]>([]);
+  const [error, setError] = useState("");
   const [form, setForm] = useState({
     clientId: "",
     requestAmount: "",
@@ -16,7 +17,17 @@ export default function CreditRequestForm() {
   });
 
   useEffect(() => {
-    api.get("/api/clients").then(res => setClients(res.data));
+    const fetchClients = async () => {
+      try {
+        const res = await api.get("/api/clients");
+        console.log("Clients loaded:", res.data);
+        setClients(res.data);
+      } catch (err) {
+        console.error("Error loading clients:", err);
+        setError("Failed to load clients. Please try again.");
+      }
+    };
+    fetchClients();
   }, []);
 
   const submit = async (e: React.FormEvent) => {
@@ -39,6 +50,18 @@ export default function CreditRequestForm() {
   return (
     <Container maxWidth="sm">
       <Typography variant="h5" mb={3}>Create Credit Request</Typography>
+      
+      {error && (
+        <Box mb={2} p={2} bgcolor="error.light" borderRadius={1}>
+          <Typography color="error.contrastText">{error}</Typography>
+        </Box>
+      )}
+      
+      {clients.length === 0 && !error && (
+        <Box mb={2} p={2} bgcolor="info.light" borderRadius={1}>
+          <Typography color="info.contrastText">Loading clients...</Typography>
+        </Box>
+      )}
       
       <Box component="form" onSubmit={submit}>
         <TextField
