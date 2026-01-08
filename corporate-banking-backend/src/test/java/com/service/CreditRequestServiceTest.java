@@ -173,14 +173,11 @@ class CreditRequestServiceTest {
 
     @Test
     void updateCreditRequest_throwsException_whenNotFound() {
-        // Arrange
         when(repo.findById("cr123"))
                 .thenReturn(Optional.empty());
-        CreditUpdateRequest req = new CreditUpdateRequest();
 
-        // Act & Assert
         assertThrows(RuntimeException.class, () -> {
-            service.update("cr123", req);
+            service.update("cr123", new CreditUpdateRequest());
         });
     }
 

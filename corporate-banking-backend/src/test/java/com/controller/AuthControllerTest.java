@@ -78,9 +78,7 @@ class AuthControllerTest {
                 .thenThrow(new BadCredentialsException("Invalid credentials"));
 
         // Act & Assert
-        assertThrows(BadCredentialsException.class, () -> {
-            authController.login(loginRequest);
-        });
+        assertThrows(BadCredentialsException.class, () -> authController.login(loginRequest));
     }
 
     @Test
@@ -91,17 +89,13 @@ class AuthControllerTest {
         when(userRepository.findByUsername("rmuser")).thenReturn(java.util.Optional.empty());
 
         // Act & Assert
-        assertThrows(java.util.NoSuchElementException.class, () -> {
-            authController.login(loginRequest);
-        });
+        assertThrows(java.util.NoSuchElementException.class, () -> authController.login(loginRequest));
     }
 
     @Test
     void login_nullRequest() {
         // Act & Assert
-        assertThrows(NullPointerException.class, () -> {
-            authController.login(null);
-        });
+        assertThrows(NullPointerException.class, () -> authController.login(null));
     }
 
     @Test
@@ -110,9 +104,7 @@ class AuthControllerTest {
         loginRequest.setUsername("");
 
         // Act & Assert
-        assertThrows(Exception.class, () -> {
-            authController.login(loginRequest);
-        });
+        assertThrows(Exception.class, () -> authController.login(loginRequest));
     }
 
     @Test
@@ -121,8 +113,6 @@ class AuthControllerTest {
         loginRequest.setPassword("");
 
         // Act & Assert
-        assertThrows(Exception.class, () -> {
-            authController.login(loginRequest);
-        });
+        assertThrows(Exception.class, () -> authController.login(loginRequest));
     }
 }
